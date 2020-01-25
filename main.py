@@ -3,9 +3,9 @@ import random
 
 class Ships:
     def __init__(self, ships, user_choice, items):
-        self.ship_choice = 0
         self.ships = ships
         self.user_choice = user_choice
+        self.ship_choice = 0
         self.items = items
         self.hp = ships[self.ship_choice][0]
         self.hp_max = ships[self.ship_choice][0]
@@ -19,8 +19,12 @@ class Ships:
         self.res = 0
 
     def ship_stats(self):
-        stats = (self.hp, self.hp_max, self.sh, self.sh_max, self.ship_choice, self.name, self.desc, self.res)
+        stats = (self.hp, self.hp_max, self.sh, self.sh_max, self.ship_choice, self.name, self.desc, self.res, self.name,
+                 self.desc, self.cost)
         return stats
+
+    def ship_choice(self, new_ship):
+        self.ship_choice = new_ship
 
     def calc_dmg(self):
         return random.randint(self.dmg_low, self.dmg_high)
@@ -118,7 +122,7 @@ planet_positions_det_count = 0
 planet_positions_temp_count = 0
 planet_names = ("ziemia1", "ziemia2", "ziemia3", "ziemia4", "ziemia5", "ziemia6", "ziemia7")
 
-orzel1 = (100, 200, 20, "Orzel1", "Opis1", 100)
+orzel1 = (100, 200, 200, "Orzel1", "Opis1", 100)
 orzel2 = (150, 300, 30, "Orzel2", "Opis2", 100)
 orzel3 = (200, 400, 40, "Orzel3", "Opis3", 100)
 lomot1 = (300, 500, 50, "Lomot1", "Opis4", 100)
@@ -191,17 +195,19 @@ def move_to_planet(planet_positions_det, moving_x):  # uruchamia klasy po wlecen
                 while True:
                     if shop_choice == "1":
                         print("Mozesz kupic nastepujace statki:")
+                        ship_no = 1
                         for ship in ships:
-                            ship_no = 1
                             print(ship_no, ship[3], ship[4], " - ", ship[5])
                             ship_no += 1
                         print(ship_no, "Powrót do mapy")
                         player_choice_shop = input("Co wybierasz? ")
-                        # for player_choice in range(ship_no):
-                            # if player_choice == player_choice_shop:
-                                # res_temp = player.ship_stats()[7]
-                                # player = None
-                                # player = Ships(ships,  player_choice_shop, items)
+                        for player_choice in range(ship_no):
+                            if player_choice == int(player_choice_shop) - 1:
+                                temp = int(player_choice_shop) - 1
+                                player.ship_choice(temp)
+                        print(player.ship_stats()[0])
+
+
 
             else:
                 print("Nie rozumiem :(")
