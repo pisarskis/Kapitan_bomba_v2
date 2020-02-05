@@ -76,3 +76,4 @@ while True:
     for i in range(max_planets):
         if obj_colision(player, planets[i]):
             speed = 0
+
